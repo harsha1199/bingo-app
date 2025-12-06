@@ -1,0 +1,13 @@
+{
+    "name": "bingo-app-root",
+    "version": "1.0.0",
+    "description": "Root for Deployment",
+    "scripts": {
+        "install-all": "npm install && cd client && npm install && cd ../server && npm install",
+        "build": "cd client && npm run build",
+        "start": "cd server && node index.js"
+    },
+    "engines": {
+        "node": "20.x"
+    }
+}
