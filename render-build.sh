@@ -2,6 +2,10 @@
 # Exit on error
 set -o errexit
 
+# Increase memory limit for ALL node processes (install and build)
+# Render free tier has ~512MB. We leave a little room for the OS.
+export NODE_OPTIONS="--max-old-space-size=460"
+
 echo "--- Installing Server Dependencies ---"
 cd server
 npm install --no-audit --no-fund --omit=dev
@@ -15,8 +19,6 @@ npm install --no-audit --no-fund
 # (We already cleaned up package.json)
 
 echo "--- Building Client ---"
-# Increase memory limit for the node process during build
-export NODE_OPTIONS="--max-old-space-size=460"
 npm run build
 cd ..
 
