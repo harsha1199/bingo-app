@@ -102,11 +102,11 @@ function App() {
     }
   }, [calledNumbers, myGrid, view, game.gridSize, game.id]);
 
-  // State for Lobby settings
-  const [localGridSize, setLocalGridSize] = useState(5);
+  const [localGridSize, setLocalGridSize] = useState(5); // Keeping state if needed or just remove? User said remove option.
+  // Actually, I will remove the state usage.
 
   const createGame = (name) => {
-    setPlayer({ name, id: '' }); // ID updated on connect
+    setPlayer({ name, id: '' });
     socket.connect();
     socket.emit('create_game', { playerName: name, gridSize: 5 });
   };
@@ -118,7 +118,7 @@ function App() {
   }
 
   const startGame = () => {
-    socket.emit('start_game', { gameId: game.id, gridSize: localGridSize });
+    socket.emit('start_game', { gameId: game.id });
   }
 
   const handleSelect = (num) => {
@@ -153,22 +153,9 @@ function App() {
           </div>
 
           {game.players.length > 1 && game.players[0].id === socket.id && (
-            <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
-              <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                <label>Grid Size:</label>
-                <select
-                  value={localGridSize}
-                  onChange={e => setLocalGridSize(Number(e.target.value))}
-                  style={{ padding: '0.5rem', borderRadius: '4px', background: 'var(--glass-bg)', color: 'white', border: '1px solid var(--glass-border)' }}
-                >
-                  <option value={5}>5x5 (Standard)</option>
-                  <option value={10}>10x10 (Large)</option>
-                </select>
-              </div>
-              <button style={{ background: 'var(--success)', color: 'white' }} onClick={startGame}>
-                Start Game
-              </button>
-            </div>
+            <button style={{ marginTop: '2rem', background: 'var(--success)', color: 'white' }} onClick={startGame}>
+              Start Game
+            </button>
           )}
           {game.players.length <= 1 && <p style={{ marginTop: '2rem' }}>Waiting for at least 1 more player...</p>}
         </div>
